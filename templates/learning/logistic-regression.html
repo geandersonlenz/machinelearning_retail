@@ -1,0 +1,62 @@
+{%extends "index.html" %}
+{% block content %}
+
+	<meta charset="utf-8">
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+  	<script src="{{ url_for('.static', filename='learningjs/underscore.js')}}"></script>
+  	<script type='text/javascript' src='https://www.google.com/jsapi?autoload={"modules":[{"name":"visualization","version":"1","packages":["orgchart"]}]}'></script>
+  	<script src="{{ url_for('.static', filename='learningjs/learningjs.js')}}"></script>
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='learningjs/style.css') }}">
+
+
+	<div class="container3">
+		<br>
+		<a class="btn btn-default" href="{{ url_for('.static', filename='learningjs/golf.csv')}}" download>Download Arquivo de Teste</a>
+		
+		<div class="row">
+			<div class="col-md-12" align="center">
+				<div class="col-md-12">
+					<br />
+
+					
+
+					<br />
+					<table class="holder1">
+						<tr>
+							<td id="drop_train_zone" class="holder">
+								Arraste aqui o arquivo de treinamento
+							</td>
+							<td id="drop_test_zone" class="holder">
+								Arraste aqui o arquivo de teste
+							<td>
+						</tr>
+					</table>
+					
+					<div id="status" class="status"></div>			
+				
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<!-- arvore -->
+			<div id="canvas"> </div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-md-12">
+				<table id="samples" class="table table-striped standard"> </table>	
+			</div>
+			<!-- tabela -->
+		</div>
+	</div>
+
+<script src="{{ url_for('.static', filename='learningjs/data_util.js')}}"></script>
+<script src="{{ url_for('.static', filename='learningjs/helpers.js')}}"></script>
+<script type="text/javascript">
+	$(document).ready( function(){
+		$( "#status" ).fadeOut( 30000 );
+	});
+</script>
+
+
+{% endblock %}

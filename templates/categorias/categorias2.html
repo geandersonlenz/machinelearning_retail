@@ -1,0 +1,1039 @@
+{%extends "index.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/timeline/style.css') }}">
+<style type="text/css">
+  img{
+    width: '100%';
+    height: 105px;
+    display: show;
+  }
+  
+  .maxima {
+    font-size: 46px;
+
+  }
+  .minima {
+    font-size: 31px;
+  }
+  
+  .div_minima {
+    text-align: left;
+  }  
+  .timeline-title {
+    font-size: 28px;
+  }  
+  .card {
+    font-size: 16px;
+  }
+</style>
+<br>
+<button class="btn btn-default" data-toggle="modal" data-target="#exampleModal" style="display: none;">Adicionar Arquivo</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form action="{{ url_for('categoriasgravar') }}" method="POST" enctype="multipart/form-data">
+          <input type="file" name="file">
+          <input type="submit" value="processar arquivo" class="btn btn-success">  
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container2">
+    <div class="page-header">
+
+        <h1 id="timeline" align="center">Previsão de Produtos conforme o tempo para {{ city | title }}</h1>
+    </div>
+    <ul class="timeline">
+
+        <li class="timeline-inverted">
+          <div class="timeline-badge success"><i class="glyphicon glyphicon-check"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][0] }}/{{ tempo['month'][0] }}/{{ tempo['year'][0] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[0] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8" align="left">
+                        <p class="maxima">
+                          {{  tempo['maxima'][0] }}ºC
+                        </p>
+
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x" align="right"></i>    
+                        </div>
+                      <div class="col-md-6 div_minima">
+                        <p class="minima">
+                          {{ tempo['minima'][0] }}ºC   
+                        </p>
+                          
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[0] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[0] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro0" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat0" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro0" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[0] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat0" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[0] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+
+          </div>
+        </li>
+        
+        <li>
+          <div class="timeline-badge success"><i class="glyphicon glyphicon-credit-card"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][1] }}/{{ tempo['month'][1] }}/{{ tempo['year'][1] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[1] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][1] }}ºC
+                        </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                          <p class="minima">
+                          {{ tempo['minima'][1] }}ºC
+                          </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[1] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[1] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro1" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat1" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro1" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[1] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat1" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[1] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="timeline-inverted">
+          <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][2] }}/{{ tempo['month'][2] }}/{{ tempo['year'][2] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[2] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][2] }}ºC
+                        </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                          <p class="minima">
+                          {{ tempo['minima'][2] }}ºC
+                          </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[2] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[2] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro2" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat2" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro2" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[2] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat2" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[2] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="timeline-badge danger"><i class="glyphicon glyphicon-credit-card"></i></div>
+
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][3] }}/{{ tempo['month'][3] }}/{{ tempo['year'][3] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[3] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][3] }}ºC
+                       </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                        <p class="minima">
+                          {{ tempo['minima'][3] }}ºC
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[3] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[3] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro3" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat3" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro3" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[3] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat3" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[3] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-inverted">
+          <div class="timeline-badge success"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][4] }}/{{ tempo['month'][4] }}/{{ tempo['year'][4] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[4] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][4] }}ºC
+                       </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                        <p class="minima">
+                          {{ tempo['minima'][4] }}ºC
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[4] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[4] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro4" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat4" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro4" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[4] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat4" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[4] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="timeline-badge success"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][5] }}/{{ tempo['month'][5] }}/{{ tempo['year'][5] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[5] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][5] }}ºC
+                        </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                        <p class="minima">
+                          {{ tempo['minima'][5] }}ºC
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[5] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[5] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro5" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat5" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro5" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[5] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat5" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[5] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-inverted">
+          <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][6] }}/{{ tempo['month'][6] }}/{{ tempo['year'][6] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[6] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][6] }}ºC
+                        </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                        <p class="minima">
+                          {{ tempo['minima'][6] }}ºC
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[6] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[6] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro6" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat6" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro6" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[6] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat6" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[6] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up scrollSuave" id="icone"></i></div>
+          <div class="timeline-panel"  id="dia08">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][7] }}/{{ tempo['month'][7] }}/{{ tempo['year'][7] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[7] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][7] }}ºC
+                        </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                        <p class="minima">
+                          {{ tempo['minima'][7] }}ºC
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[7] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[7] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro7" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat7" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro7" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[7] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat7" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[7] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-inverted">
+          <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up scrollSuave"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][8] }}/{{ tempo['month'][8] }}/{{ tempo['year'][8] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[8] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][8] }}ºC
+                        </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                        <p class="minima">
+                          {{ tempo['minima'][8] }}ºC
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[8] }}.png"><br>                 
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[8] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro8" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat8" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro8" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[8] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat8" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[8] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="timeline-badge warning"><i class="glyphicon glyphicon-thumbs-up scrollSuave"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Dia {{ tempo['day'][9] }}/{{ tempo['month'][8] }}/{{ tempo['year'][9] }}</h4>
+              <p class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ dias_da_semana[9] | replace("0","Segunda-Feira")
+                    | replace("0","Segunda-Feira")
+                    | replace("1","Terça-Feira")
+                    | replace("2","Quarta-Feira")
+                    | replace("3","Quinta-Feira")
+                    | replace("4","Sexta-Feira")
+                    | replace("5","Sábado")
+                    | replace("6","Domingo")
+                  }}</p>
+            </div>
+            <div class="timeline-body">
+              <p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="col-md-4">
+                          <i class="fa fa-arrow-up fa-5x"></i>
+                      </div>
+                      <div class="col-md-8">
+                        <p class="maxima">
+                         {{ tempo['maxima'][9] }}ºC
+                        </p>
+                      </div>  
+                    </div>
+                    <div class="col-md-4">
+                      <div class="col-md-3">
+                          <i class="fa fa-arrow-down fa-3x"></i>    
+                        </div>
+                      <div class="col-md-6">
+                        <p class="minima">
+                          {{ tempo['minima'][9] }}ºC
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div align="center">
+                        
+                        <img src="{{ url_for('.static', filename='img/weather/')}}{{ clima[9] }}.png"><br>
+
+                      </div>
+                      <div align="center">
+                        <span class="weathers">
+                          <strong>{{ clima[9] 
+                             | replace("Partly Cloudy", "Parcialmente Nublado") 
+                             | replace("Mostly Sunny", "Grande parte ensolarado") 
+                             | replace("Mostly Cloudy","Grande parte nublado") 
+                             | replace("Scattered Thunderstorms","Probabilidade de Temporal") 
+                             | replace("Scattered Showers","Probabilidade de Chuvisco") 
+                             | replace("Showers","Chuvisco")
+                             | replace("Cloudy", "Nublado")
+                             | replace("Rain", "Chuva")
+                             | replace("Sunny", "Ensolarado")
+                             | replace("Thunderstorms", "Temporal") }}</strong>
+                        </span>
+                      </div>
+                    </div>                  
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                  </div>
+              </p>
+              <hr>
+              <div>
+                <p>
+                  
+                  <button class="btn btn-primary" type="button" id="btn_pro9" aria-expanded="false" aria-controls="collapseExample">
+                    Produtos Recomendados
+                  </button>
+                  <button class="btn btn-primary" type="button" id="btn_cat9" aria-expanded="false" aria-controls="collapseExample">
+                    Categorias Recomendadas
+                  </button>
+                </p>
+                
+                  <div id="pro9" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_produtos_total[9] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+
+                  <div id="cat9" style="display: none;">
+                    <div class="card card-body">
+                      {{ lista_total[9] | replace("[","") | replace("]","") | replace("'","") | title }}
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+          </div>
+        </li>
+
+    </ul>
+    
+    
+      
+    
+</div>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <script src="{{ url_for('.static', filename='js/toggle.js') }}" type="text/javascript"></script>
+{% endblock %}

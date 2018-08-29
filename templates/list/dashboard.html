@@ -1,0 +1,233 @@
+{%extends "index.html" %}
+{% block content %}
+<script src="{{ url_for('.static', filename='js/arbor.js')}}"></script>
+
+<link href="{{ url_for('.static', filename='css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
+<link href="{{ url_for('.static', filename='css/gauge.css')}}" rel="stylesheet">
+<link href="{{ url_for('.static', filename='chartist/chartist.min.css')}}" rel="stylesheet">
+
+<script type="text/javascript">
+  var quantity = {{ quantity | safe }};
+  var ctr = {{ country | safe }};
+  
+</script>
+<script type="text/javascript">
+    var casual = {{ casual | safe }};
+    var luxury = {{ luxury | safe }};
+    var party = {{ party | safe }};
+    var sports = {{ sports | safe }};
+
+    var casual_n = "{{ casual_n | safe }}";
+    var luxury_n = "{{ luxury_n | safe }}";
+    var party_n = "{{ party_n | safe }}";
+    var sports_n = "{{ sports_n | safe }}";    
+</script>
+<style type="text/css">
+    .ibox {
+        width: '100%';
+    }
+    .ibox h1{
+        font-size: 20px;
+
+
+    }
+    #page-wrapper{
+        background-color: #e0e1e2;
+    }
+    #text {
+        text-align: center;
+        padding-left: 200px;
+    }
+    
+    .ibox-title{
+        border-radius: 15px;
+    }
+    img #profile {
+        height: 500px;
+    }
+    .box {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    padding: 10px 25px;
+    text-align: right;
+    display: block;
+    background-color: #fff;
+    height: 250px;
+
+    }
+    iframe{
+        border-radius: 10px;
+    }
+
+    .box-icon {
+        background-color: #57a544;
+        border-radius: 50%;
+        display: table;
+        height: 100px;
+        margin: 0 auto;
+        width: 100px;
+        margin-top: -61px;
+    }
+    .box-icon span {
+        color: #fff;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .info h4 {
+        font-size: 20px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    .info > p {
+        color: #717171;
+        font-size: 16px;
+        padding-top: 10px;
+        text-align: justify;
+    }
+    .info > a {
+        background-color: #03a9f4;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        color: #fff;
+        transition: all 0.5s ease 0s;
+    }
+    .info > a:hover {
+        background-color: #0288d1;
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.12);
+        color: #fff;
+        transition: all 0.5s ease 0s;
+    }
+    #footer{
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+</style>
+
+        
+        <div class="container3"><br>
+            
+            <div class="gridster">
+                <ul>
+                    <li data-row="1" data-col="1" data-sizex="3" data-sizey="2">
+                        <div class="box">
+                            
+                        </div>
+                    </li>
+                    <li data-row="2" data-col="1" data-sizex="3" data-sizey="1">
+                        <div class="box">
+                            
+                        </div>
+                    </li>
+                    <li data-row="3" data-col="1" data-sizex="3" data-sizey="1">
+                        <div class="box">
+                            
+                        </div>
+                    </li>
+                    
+                    <li data-row="1" data-col="2" data-sizex="3" data-sizey="1">
+                        <div class="box">
+                            
+                        </div>
+                    </li>
+                    <li data-row="2" data-col="2" data-sizex="3" data-sizey="1"></li>
+
+                </ul>
+            </div>
+            
+        </div>
+        
+    <script type="text/javascript">
+        $(function(){ //DOM Ready
+
+            $(".gridster ul").gridster({
+                widget_margins: [10, 10],
+                widget_base_dimensions: [140, 140]
+            });
+
+        });
+    </script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.spline.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.resize.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.pie.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.symbol.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.time.js')}}"></script>
+
+    <script src="{{ url_for('.static', filename='js/plugins/easypiechart/jquery.easypiechart.js')}}"></script>
+    <!-- <script src="{{ url_for('.static', filename='js/main.js')}}"></script> -->
+
+    <script type="text/javascript" src="{{ url_for('.static', filename='graphs/graphmeanpromotiondays.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('.static', filename='chartist/chartist.min.js')}}"></script>
+
+        <!-- Script para contadores dos clusters  -->
+    <!-- <script>
+        $(document).ready(function() {
+
+            var sparklineCharts = function(){
+                 $("#sparkline5").sparkline([1, 4], {
+                     type: 'pie',
+                     height: '140',
+                     sliceColors: ['#1ab394', '#F5F5F5']
+                 });
+
+                 $("#sparkline7").sparkline([2, 2], {
+                     type: 'pie',
+                     height: '140',
+                     sliceColors: ['#ed5565', '#F5F5F5']
+                 });
+            };
+
+            var sparkResize;
+
+            $(window).resize(function(e) {
+                clearTimeout(sparkResize);
+                sparkResize = setTimeout(sparklineCharts, 500);
+            });
+
+            sparklineCharts();
+
+
+        });
+    </script>
+   
+    <script type="text/javascript">
+  /* GRAFICO country_by_quantity */
+var myChartqtd = {
+  "type": "bar",
+  "title": {
+    "text": "Vendas por País",
+    "size": "12"
+  },
+  "plot": {
+    "value-box": {
+      "text": "%v"
+    },
+    "tooltip": {
+      "text": "%v"
+    }
+  },
+  "scale-x": {
+    "values": ctr
+  },
+  "series": [
+    {
+      "values":  quantity,
+      "text": "apples"
+    }
+  ]
+};
+zingchart.render({
+  id: "country_by_quantity",
+  data: myChartqtd,
+  height: "300",
+  width: "100%"
+});
+
+</script>
+ -->
+
+
+{% endblock %}

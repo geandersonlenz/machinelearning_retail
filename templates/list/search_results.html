@@ -1,0 +1,36 @@
+{%extends "index.html" %}
+{% block content %}
+
+<h2>Result Client</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>CPF</th>
+      <th>Age</th>
+      <th>Company Name</th>
+      <th>Celular</th>
+      <th>Profissao</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in clients %}
+    <tr>
+      <td>{{ c.name }}</td>
+      <td>{{ c.cpf }}</td>
+      <td>{{ c.age}}</td>
+      <td>{{ c.companyname }}</td>
+      <td>{{ c.cel }}</td>
+      <td>{{ c.profissao }}</td>
+      <td>
+	      <a href="{{ url_for('listOneClient', id = c._id)}}" class="btn btn-primary btn-sm" title="View" ><i class="fa fa-eye"></i> VIEW</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>  
+</table>
+
+
+{% endblock %}

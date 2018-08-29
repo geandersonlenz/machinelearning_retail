@@ -1,0 +1,45 @@
+{%extends "index.html" %}
+{% block content %}
+
+
+<style type="text/css">
+	.container-table{
+		width: '100%'
+	}
+	.table-striped {
+		color: black;
+		background-color: #96beff;
+	}
+</style>
+<body>
+  	<div class="container">
+  		<div>
+  			<h1 align="center">RANKING OF PRODUCTS</h1>		
+  			
+  		</div>
+  	</div>
+  	<div class="container-table">
+	  	<table class="table table-striped">
+	  	        <thead>
+	  	            <tr>
+	  	                <th>ANAMES</th>
+	  	                <th>RANK</th>
+	  	                <th>POINTS</th>
+	  	            </tr>
+	  	        </thead>
+	  	        <tbody>
+	  	        	{% for x,y,z in dt|sort(attribute=2, reverse=True)  %}
+	  	            <tr>
+	  	            	<td>{{ x }}</td>
+
+		            	<td>{{ y }}</td>
+
+		            	<td>({{'%0.2f'| format(z | float)}}%)</td>
+
+	  	            </tr>
+	  	        	{% endfor %}
+	  	        </tbody>
+	  	    </table>
+  	</div>
+
+{% endblock %}

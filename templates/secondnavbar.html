@@ -1,0 +1,33 @@
+<div class="btn-group">
+	<button class="btn btn-default" type="button">Sales</button>
+	<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"><span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+		  <li><a href="{{ url_for('bycountry')}}">Por País</a></li>
+		  <li><a href="{{ url_for('bycategory')}}">Por Categoria</a></li>
+		  <li><a href="{{ url_for('byacceptdiscount')}}">Por Accept Discount</a></li>
+		  <li><a href="{{ url_for('bydayofweek')}}">Por Dias da Semana</a></li>
+		  <li><a href="{{ url_for('bydisplay')}}">Por Display</a></li>
+		  <li><a href="{{ url_for('bytypeofpromotion')}}">Por Type of Promotion</a></li>
+		  <li><a href="{{ url_for('kindofsales')}}">Kind of Sales</a></li>
+	</ul>
+</div>
+<div class="btn-group">
+	<button class="btn btn-default" type="button">Products</button>
+	<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"><span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li><a href="{{ url_for('typeofproduct')}}">Type Of Product</a></li>
+		<li><a href="{{ url_for('normalunitprice')}}">Normal Price and Unit Price</a></li>
+		<li><a href="{{ url_for('displayinstore')}}">Display in Store</a></li>
+		<li><a href="{{ url_for('promotiondaysbycategory')}}">Promotion Days por Categoria</a></li>
+	</ul>
+</div>
+	<div class="btn-group">
+		<button class="btn btn-default" type="button">Revenue</button>
+		<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"><span class="caret"></span>
+		</button>
+	<ul class="dropdown-menu">
+		<li><a href="{{ url_for('revenuebyweather')}}">Revenue by Weather</a></li>
+	</ul>
+</div>

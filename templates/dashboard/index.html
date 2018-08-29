@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='dashboard/style.css') }}">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='dashboard/css/normalize.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='dashboard/css/demo.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='dashboard/css/component.css')}}" />
+
+</head>
+<style type="text/css">
+	body {
+		
+		background: url({{ url_for('.static', filename='dashboard/img/wallpaper.jpg') }}) no-repeat top center fixed;
+		/*background: url('https://wallpaperstudio10.com/static/wpdb/wallpapers/3840x2160/172455.jpg') no-repeat top center fixed*/;
+    	background-size: cover;
+
+	}
+
+	.btn-danger:hover { 
+		background-color: red;
+	}
+	.btn-success:hover { 
+		background-color: green;
+	}
+	.btn-primary:hover { 
+		background-color: blue;
+	}
+	.btn-warning:hover {
+
+	}
+	.btn-info:hover {
+		background-color: #07adea;
+	}
+</style>
+<body>
+
+	<div class="content">
+		<div id="large-header" class="large-header">
+			<canvas id="demo-canvas"></canvas>
+			<div class="main-title">
+				<div class="box">
+					
+					<br>
+					<div class="row" id="linha_2">
+						<div class="col-md-3" align="center" id="5">
+							<a href="{{ url_for ('ranking')}}" class="btn btn-block btn-lg  bttn-white" >
+								<i class="fa fa-signal fa-5x"></i><br>
+									<span class="">Ranking</span></a>
+							</a>	
+						</div>
+						<div class="col-md-3" align="center" id="6">
+							<a href="{{ url_for ('basket')}}" class="btn btn-block btn-lg bttn-white" >
+								<i class="fa fa-dot-circle-o fa-5x"></i><br>
+									<span id="gigante">Market Basket Analysis</span></a>
+							</a>	
+						</div>
+						<div class="col-md-3" align="center" id="7">
+							<a href="{{ url_for('list_projects') }}" class="btn btn-block btn-lg bttn-white" >
+								<i class="fa fa-folder-open fa-5x"></i><br>
+									<span id="maior">Análise de Texto</span></a>
+							</a>	
+						</div>
+
+						<div class="col-md-3" align="center" id="8">
+							<a href="{{ url_for('listclients') }}" class="btn btn-block btn-lg bttn-white" >
+								<i class="fa fa-users fa-5x"></i><br>
+									<span id="maior">Análise de Clientes</span></a>
+							</a>	
+						</div>
+						
+					</div>
+					<br>
+					<div class="row" id="linha_3">
+						
+						<div class="col-md-3" align="center" id="9">
+							<a href="{{ url_for('logistic_regression') }}" class="btn btn-block btn-lg btn-info bttn-dark" >
+								<i class="fa fa-leanpub fa-5x"></i><br>
+									<span id="maior">Árvore de decisão</span></a>
+							</a>	
+						</div>
+
+						<div class="col-md-3" align="center" id="10">
+							<a href="{{ url_for('mymap')}}" class="btn btn-block btn-lg btn-warning bttn-dark" >
+								<i class="fa fa-map fa-5x"></i><br>
+									<span id="maior">Mapas</span></a>
+							</a>	
+						</div>
+
+						<div class="col-md-3" align="center" id="11">
+							<a href="{{ url_for('popoto') }}" class="btn btn-block btn-lg btn-success bttn-dark" >
+								<i class="fa fa-globe fa-5x"></i><br>
+									<span id="maior">Grafo</span></a>
+							</a>	
+						</div>
+						
+						<div class="col-md-3" align="center" id="sair">
+							<a href="{{ url_for('categorias') }}" class="btn btn-block btn-lg btn-danger bttn-dark">
+								<i class="fa fa-list fa-5x"></i><br>
+									<span id="maior">Categorias</span></a>
+							</a>	
+						</div>
+					</div>
+					<br>
+					<div class="row" id="linha_1">
+						<div class="col-md-3" align="center" id="1">
+							<a class="btn btn-block btn-lg btn-info bttn-dark" >
+								<i class="fa fa-twitter fa-5x"></i><br>
+									<span class="">TwitDash</span></a>
+							</a>	
+						</div>
+						<div class="col-md-3" align="center" id="2">
+							<a class="btn btn-block btn-lg btn-primary bttn-dark" >
+								<i class="fa fa-facebook-official fa-5x"></i><br>
+									<span class="">FaceDash</span></a>
+							</a>	
+						</div>
+						<div class="col-md-3" align="center" id="3">
+							<a class="btn btn-block btn-lg btn-warning bttn-dark" >
+								<i class="fa fa-instagram fa-5x"></i><br>
+									<span class="">InstaDash</span></a>
+							</a>	
+						</div>
+						<div class="col-md-3" align="center"  id="4">
+							<a class="btn btn-block btn-lg btn-success bttn-dark">
+								<i class="fa fa-whatsapp fa-5x"></i><br>
+									<span class="">WhatsDash</span></a>
+							</a>	
+						</div>
+
+					</div>
+				</div>
+				
+
+			</div><!-- fim(adicionar antes daqui) -->
+		</div>
+	</div>
+
+	<script src="{{ url_for('.static', filename='dashboard/js/TweenLite.min.js')}}"></script>
+	<script src="{{ url_for('.static', filename='dashboard/js/EasePack.min.js')}}"></script>
+	<script src="{{ url_for('.static', filename='dashboard/js/rAF.js')}}"></script>
+	<script src="{{ url_for('.static', filename='dashboard/js/demo-1.js')}}"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+</body>
+</html>

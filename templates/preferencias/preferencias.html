@@ -1,0 +1,66 @@
+{%extends "index.html" %}
+{% block content %}
+<style type="text/css">
+	th {
+		text-align: center;
+		font-size: 18px;
+	}
+	td {
+		text-align: center;
+		font-size: 22px;
+	}
+	#pred {
+		color: #6da5ff;
+		text-align: right;
+		border: white;
+	}
+	#pref {
+		color: #082604;
+		text-align: left;
+		border: white;
+	}
+</style>
+<div class="container3">
+
+	<h1 align="center">Preferências de Produtos</h1>
+	<hr>
+
+	<div class="col-md-3" align="center">
+		<h1>Selecione o Arquivo</h1>
+		
+		<form action="{{ url_for('preferenciasupdate') }}" method="POST" enctype="multipart/form-data">
+			<input type="file" name="file">
+			<br>
+			<button type="submit" class="btn btn-primary">Atualizar Banco de dados</button>	
+		</form>
+		
+
+	</div>
+	<div class="col-md-9">
+
+		<table class="table" border="0">
+			<thead>
+				<tr>
+					<th>Preditores</th>
+                    <th>% Preferência</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a,b,c in data %}
+				<tr>
+					
+					<td id="pred"><strong>{{ b }}</strong></td>
+					<td id="pref">{{'%0.2f'| format(c | float*100)}}%</td>
+					
+
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+	
+</div>
+
+
+{% endblock %}

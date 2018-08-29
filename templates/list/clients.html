@@ -1,0 +1,42 @@
+{%extends "index.html" %}
+{% block content %}
+
+<!-- TABELA DA PAGINA  -->
+<br>
+<div class="container3">
+<table class="table" id="example">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Company Name</th>
+      <th>Fone</th>
+      <th>Cel</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for lc in listclients %}
+    <tr>
+      <td>{{ lc.name  }} {{ lc.last_name }}</td>
+      <td>{{ lc.companyname }}</td>
+      <td>{{ lc.fone }}</td>
+      <td>{{ lc.cel }}</td>
+      <td>
+        <a href="{{ url_for('listOneClient', id = lc._id) }}" class="btn btn-primary btn-sm" title="View" ><i class="fa fa-eye"></i></a>
+        <a href="" class="btn btn-warning btn-sm" title="Edit"><i class="fa fa-pencil-square-o"></i></a>
+        <a href="{{ url_for('clientremove', id = lc._id) }}" class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-eraser"></i></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>  
+</table>
+</div>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    $('#example').DataTable({
+      "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+    } );
+  } );
+</script>
+{% endblock %}

@@ -1,0 +1,562 @@
+{%extends "index.html" %}
+{% block content %}
+<script src="{{ url_for('.static', filename='js/arbor.js')}}"></script>
+
+<link href="{{ url_for('.static', filename='css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
+
+<style type="text/css">
+    .ibox {
+        width: '100%';
+    }
+    .ibox h1{
+        font-size: 20px;
+
+
+    }
+    #clusters {
+        background-color: #e0e1e2;
+    }
+    #predicoes{
+        
+        background-color: #e0e1e2;
+    }
+    #target{
+        background-color: #e0e1e2;
+    }
+    #page-wrapper{
+        background-color: #e0e1e2;
+    }
+    #text {
+        text-align: center;
+        padding-left: 200px;
+    }
+    /*.ibox-title{
+        border-style: solid;
+        border-color: #2d5f8d;
+
+    }*/
+    .ibox {
+        /*border-style: solid;
+        border-color: #2d5f8d;
+        border-width: 1px;*/
+    }
+    .ibox-title{
+        border-radius: 15px;
+    }
+    img #profile {
+        height: 500px;
+    }
+</style>
+
+        
+        <div class="container3"><br>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-6" style="display: {{ status }}">
+                            <div class="ibox float-e-margins">
+                                    <div class="profile-image">
+                                        <!-- <img id='profile' src="{{ url_for('.static', filename='img/a4.jpg')}}" class="img-circle circle-border m-b-md" alt="profile"> -->
+                                    </div>
+                                    <div class="profile-info">
+                                        <div class="">
+                                            <div>
+                                                <h2 class="no-margins">
+                                                    Client: {{ data['name'] }} {{ data['last_name'] }}
+                                                </h2>
+
+                                                <h4>
+                                                    Company: {{ data['companyname'] }}
+                                                </h4>
+
+                                                <small>
+                                                    Fone: {{ data['cel'] }}
+                                                </small>
+                                                <br>
+                                                <small>
+                                                    Resumo: {{ data['resumo'] }}
+                                                </small>
+                                                <p>
+                                                    Profissão: {{ data['profissao'] }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                    </div>
+                    
+                    <!-- <div class="col-md-3">
+                        <table class="table small m-b-xs">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <strong>142</strong> Projects
+                                </td>
+                                <td>
+                                    <strong>22</strong> Followers
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>61</strong> Comments
+                                </td>
+                                <td>
+                                    <strong>54</strong> Articles
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>154</strong> Tags
+                                </td>
+                                <td>
+                                    <strong>32</strong> Friends
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                </div>    
+            </div>
+            
+            <div class="col-md-4" id="target">
+                <div class="row">
+                   <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title" style="border-radius: 10px;">
+                                <h5 id="text">Target</h5>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-success pull-right">Monthly</span>
+                                <h5>Tempo para Agir</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">40886,200</h1>
+                                <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
+                                <small>Total income</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-info pull-right">Annual</span>
+                                <h5>Conteúdo para Agir</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">275,800</h1>
+                                <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                                <small>New orders</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-primary pull-right">Today</span>
+                                <h5>Últimas Compras</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">106,120</h1>
+                                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                                <small>New visits</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-danger pull-right">Low value</span>
+                                <h5>Recompra</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">80,600</h1>
+                                <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                                <small>In first month</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ibox float-e-margins" style="padding-top: 0px;">
+                            <div class="ibox-title">
+                                <h5 id="text">Previsão de Vendas</h5>
+                            </div>
+                        </div>
+                        <div class="ibox ibox-content">
+                            <div class="row">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-dashboard-chart"></div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" id="predicoes">
+                <div class="col-lg-12">
+
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5 id="text">Grafo</h5>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="viewport" width="490" height="300"" class="ibox"></canvas>         
+                        </div>
+                    
+                </div>
+
+                <div class="row">
+                   <div class="col-lg-12">
+                        <div class="ibox float-e-margins" style="padding-top: 0px;">
+                            <div class="ibox-title">
+                                <h5 id="text">Predições</h5>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <!-- <span class="label label-danger pull-right">Low value</span> -->
+                                <h5>Lifetime Value</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">80,600</h1>
+                                <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                                <small>In first month</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <!-- <span class="label label-primary pull-right">Today</span> -->
+                                <h5>Churn</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">106,120</h1>
+                                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                                <small>New visits</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <!-- <span class="label label-info pull-right">Annual</span> -->
+                                <h5>Proxima Compra</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">275,800</h1>
+                                <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                                <small>New orders</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Propensão para Comprar</h5>
+                                <h2>20%</h2>
+                                <div class="progress progress-mini">
+                                    <div style="width: 28%;" class="progress-bar progress-bar-danger"></div>
+                                </div>
+
+                                <div class="m-t-sm small">Server down since 4:32 pm.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Propensão para Cancelar</h5>
+                                <h2>65%</h2>
+                                <div class="progress progress-mini">
+                                    <div style="width: 28%;" class="progress-bar progress-bar-danger"></div>
+                                </div>
+
+                                <div class="m-t-sm small">Server down since 4:32 pm.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Propensão para Converter</h5>
+                                <h2>65%</h2>
+                                <div class="progress progress-mini">
+                                    <div style="width: 68%;" class="progress-bar"></div>
+                                </div>
+
+                                <div class="m-t-sm small">Server down since 4:32 pm.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                </div>
+                <div class="col-lg-4" id="clusters">
+                    <div class="row">
+                       <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5 id="text">Clusters</h5>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <!-- <span class="label label-danger pull-right">Low value</span> -->
+                                    <h5>User activity</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h1 class="no-margins">80,600</h1>
+                                    <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                                    <small>In first month</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <!-- <span class="label label-primary pull-right">Today</span> -->
+                                    <h5>Media Total</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h1 class="no-margins">106,120</h1>
+                                    <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                                    <small>New visits</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>Comportamento</h5>
+                                    <h2>42/20</h2>
+                                    <div class="text-center">
+                                        <div id="sparkline5"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <h5>Categoria</h5>
+                                    <h2>685/211</h2>
+                                    <div class="text-center">
+                                        <div id="sparkline7"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: '100%'; height: 300px;">
+                        <iframe class="ibox" src="{{ url_for('.static', filename='maps/map_receita3.html')}}" width="100%" height="300" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.spline.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.resize.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.pie.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.symbol.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.time.js')}}"></script>
+
+    <script src="{{ url_for('.static', filename='js/plugins/easypiechart/jquery.easypiechart.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/main.js')}}"></script>
+
+    
+        <!-- Script para contadores dos clusters  -->
+    <script>
+        $(document).ready(function() {
+
+            var sparklineCharts = function(){
+                 $("#sparkline5").sparkline([1, 4], {
+                     type: 'pie',
+                     height: '140',
+                     sliceColors: ['#1ab394', '#F5F5F5']
+                 });
+
+                 $("#sparkline7").sparkline([2, 2], {
+                     type: 'pie',
+                     height: '140',
+                     sliceColors: ['#ed5565', '#F5F5F5']
+                 });
+            };
+
+            var sparkResize;
+
+            $(window).resize(function(e) {
+                clearTimeout(sparkResize);
+                sparkResize = setTimeout(sparklineCharts, 500);
+            });
+
+            sparklineCharts();
+
+
+        });
+    </script>
+    <!-- Script para Grafico de linha  -->
+    
+    <script>
+        $(document).ready(function() {
+            $('.chart').easyPieChart({
+                barColor: '#f8ac59',
+//                scaleColor: false,
+                scaleLength: 5,
+                lineWidth: 4,
+                size: 80
+            });
+
+            $('.chart2').easyPieChart({
+                barColor: '#1c84c6',
+//                scaleColor: false,
+                scaleLength: 5,
+                lineWidth: 4,
+                size: 80
+            });
+
+            var data2 = [
+                [gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8],
+                [gd(2012, 1, 5), 9], [gd(2012, 1, 6), 7], [gd(2012, 1, 7), 5], [gd(2012, 1, 8), 4],
+                [gd(2012, 1, 9), 7], [gd(2012, 1, 10), 8], [gd(2012, 1, 11), 9], [gd(2012, 1, 12), 6],
+                [gd(2012, 1, 13), 4], [gd(2012, 1, 14), 5], [gd(2012, 1, 15), 11], [gd(2012, 1, 16), 8],
+                [gd(2012, 1, 17), 8], [gd(2012, 1, 18), 11], [gd(2012, 1, 19), 11], [gd(2012, 1, 20), 6],
+                [gd(2012, 1, 21), 6], [gd(2012, 1, 22), 8], [gd(2012, 1, 23), 11], [gd(2012, 1, 24), 13],
+                [gd(2012, 1, 25), 7], [gd(2012, 1, 26), 9], [gd(2012, 1, 27), 9], [gd(2012, 1, 28), 8],
+                [gd(2012, 1, 29), 5], [gd(2012, 1, 30), 8], [gd(2012, 1, 31), 25]
+            ];
+
+            var data3 = [
+                [gd(2012, 1, 1), 800], [gd(2012, 1, 2), 500], [gd(2012, 1, 3), 600], [gd(2012, 1, 4), 700],
+                [gd(2012, 1, 5), 500], [gd(2012, 1, 6), 456], [gd(2012, 1, 7), 800], [gd(2012, 1, 8), 589],
+                [gd(2012, 1, 9), 467], [gd(2012, 1, 10), 876], [gd(2012, 1, 11), 689], [gd(2012, 1, 12), 700],
+                [gd(2012, 1, 13), 500], [gd(2012, 1, 14), 600], [gd(2012, 1, 15), 700], [gd(2012, 1, 16), 786],
+                [gd(2012, 1, 17), 345], [gd(2012, 1, 18), 888], [gd(2012, 1, 19), 888], [gd(2012, 1, 20), 888],
+                [gd(2012, 1, 21), 987], [gd(2012, 1, 22), 444], [gd(2012, 1, 23), 999], [gd(2012, 1, 24), 567],
+                [gd(2012, 1, 25), 786], [gd(2012, 1, 26), 666], [gd(2012, 1, 27), 888], [gd(2012, 1, 28), 900],
+                [gd(2012, 1, 29), 178], [gd(2012, 1, 30), 555], [gd(2012, 1, 31), 993]
+            ];
+
+
+            var dataset = [
+                {
+                    label: "Number of orders",
+                    data: data3,
+                    color: "#1ab394",
+                    bars: {
+                        show: true,
+                        align: "center",
+                        barWidth: 24 * 60 * 60 * 600,
+                        lineWidth:0
+                    }
+
+                }, {
+                    label: "Payments",
+                    data: data2,
+                    yaxis: 2,
+                    color: "#1C84C6",
+                    lines: {
+                        lineWidth:1,
+                            show: true,
+                            fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.2
+                            }, {
+                                opacity: 0.4
+                            }]
+                        }
+                    },
+                    splines: {
+                        show: false,
+                        tension: 0.6,
+                        lineWidth: 1,
+                        fill: 0.1
+                    },
+                }
+            ];
+
+
+            var options = {
+                xaxis: {
+                    mode: "time",
+                    tickSize: [3, "day"],
+                    tickLength: 0,
+                    axisLabel: "Date",
+                    axisLabelUseCanvas: true,
+                    axisLabelFontSizePixels: 12,
+                    axisLabelFontFamily: 'Arial',
+                    axisLabelPadding: 10,
+                    color: "#d5d5d5"
+                },
+                yaxes: [{
+                    position: "left",
+                    max: 1070,
+                    color: "#d5d5d5",
+                    axisLabelUseCanvas: true,
+                    axisLabelFontSizePixels: 12,
+                    axisLabelFontFamily: 'Arial',
+                    axisLabelPadding: 3
+                }, {
+                    position: "right",
+                    clolor: "#d5d5d5",
+                    axisLabelUseCanvas: true,
+                    axisLabelFontSizePixels: 12,
+                    axisLabelFontFamily: ' Arial',
+                    axisLabelPadding: 67
+                }
+                ],
+                legend: {
+                    noColumns: 1,
+                    labelBoxBorderColor: "#000000",
+                    position: "nw"
+                },
+                grid: {
+                    hoverable: false,
+                    borderWidth: 0
+                }
+            };
+
+            function gd(year, month, day) {
+                return new Date(year, month - 1, day).getTime();
+            }
+
+            var previousPoint = null, previousLabel = null;
+
+            $.plot($("#flot-dashboard-chart"), dataset, options);
+
+            
+
+            
+        });
+    </script>
+{% endblock %}

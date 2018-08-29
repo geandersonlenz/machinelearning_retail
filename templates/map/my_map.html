@@ -1,0 +1,16 @@
+{%extends "index.html" %}
+{% block content %}
+
+<a href="{{ url_for('dashboard')}}" class="btn btn-primary">Return Dashboard</a>
+<a href="{{ url_for('mymap')}}" class="btn btn-default active">My Map</a>
+<a href="{{ url_for('mapcluster')}}" class="btn btn-default">Map Cluster</a>
+<a href="{{ url_for('mapheatmap')}}" class="btn btn-default">Map Heatmap</a>
+<a href="{{ url_for('receita3')}}" class="btn btn-default">Map Receita</a>
+
+<div style="padding-top: 5px;">
+
+<iframe src="{{ url_for('.static', filename='maps/my_map.html')}}" width="100%" height="800px" frameborder="0"></iframe>	
+
+</div>
+             
+{% endblock %}

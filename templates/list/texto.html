@@ -1,0 +1,114 @@
+{%extends "index.html" %}
+{% block content %}
+<style type="text/css">
+  center{
+  	font-size: 20px;
+  }
+  #counter {
+  	padding-top: 20px;
+  }
+  #result{
+  	font-size: 50px;
+  }
+  .token {
+  	font-size: 19px;
+  }
+  .sumarizacao{
+  	font-size: 18px;
+  }
+
+</style>
+<br>
+<a href="{{ url_for('list_projects')}}" class="projects btn btn-info btn-sm"><i class="fa-2x fa fa-backward"></i> back </a>
+<a href="{{ url_for('wordcloud', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-cloud"></i> Word Cloud </a>
+<a href="{{ url_for('texto', id=project._id)}}" class="projects btn btn-default btn-sm active"><i class="fa-2x fa fa-font"></i> Texto </a>
+<a href="{{ url_for('analisedesentimento', id = project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Análise de Sentimento</a>
+<!-- <a href="{{ url_for('topicmodelling', id= project._id)}}" class="projects btn btn-default btn-sm" ><i class="fa-2x fa fa-eye"></i> Topic Modelling</a>
+<a href="{{ url_for('geracaodetexto', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-eraser"></i> Geração de Texto</a>
+<a href="{{ url_for('speechtotext', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Speech to Text</a> -->
+<a href="{{ url_for('entities', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Entities</a>
+<a href="{{ url_for('stopwords', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Stopwords</a>
+
+<h1><small>{{ project.title }}</small></h1>
+
+<div class="row">
+	<!-- <h1><small>{{ project.title }}</small></h1> -->
+	<hr>
+	<div class="col-md-6">
+		<h1>{{ title }}</h1>
+		<center id="str">{{ project.texto }}</center>	
+	</div>	
+	<div class="col-md-4">
+			<h1> Sumarização: </h1>
+			<p class="sumarizacao">{% for a in project.key_summarize  %}| {{ a }} {% endfor %}</p>
+		</div>
+		<div class="col-md-2">
+			<h2> Word Count:</h2>
+			<h4 id="demo"></h4>
+			<p class="sumarizacao"><input type="text" name="" placeholder="Search Word in text" class="form-control" id="txt1"></p>
+			<button id="searchButton">Search</button>
+		</div>
+	
+</div>
+
+	<div class="row" id="counter">
+		<div class="col-md-2">
+			<h1> Counter:</h1>
+				<table class="table">
+					<thead>
+				        <tr>
+				            <th>Tag</th>
+				            <details>
+							  <summary>Legenda <i class="fa fa-info-circle"></i></summary>
+							  <p>NNP: </p>
+							  <p>VBG: </p>
+							  <p>VBN: </p>
+							  <p>IN: </p>
+							  <p>NNPS </p>
+							</details>
+				            <th></th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        	{% for key, value in project.counter.items()  %}
+			            <tr>
+			                <td>{{ key }}</td>
+			                <td align="right">{{ value }}</td>
+			            </tr>
+			            {% endfor %}
+			        </tbody>
+			    </table>	
+		</div>	
+		<div class="col-md-4">
+			<h1> Tokenization: </h1>
+				<p class="token">{% for key in project.tokenization  %}{{ key }} | {% endfor %}</p>
+		</div>
+		<div class="col-md-6">
+			<h3 id="result">Result: {{ project.classify }}</h3>
+		</div>	
+	</div>	
+
+
+<script type="text/javascript">
+
+	$("#searchButton").click(function() {
+  var myString = document.getElementById("str").innerHTML;
+  var myWord = document.getElementById("txt1").value;
+  var myPattern = new RegExp('(\\w*'+myWord+'\\w*)','gi');
+
+  var matches = myString.match(myPattern);
+   
+  if (matches === null)
+  {
+      document.getElementById("demo").innerHTML = "No results";
+      return;
+  }
+    
+  document.getElementById("demo").innerHTML = matches.length + ' Resultado(s) encontrado(s) ';
+});
+
+</script>
+
+
+
+{% endblock %}

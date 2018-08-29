@@ -1,0 +1,304 @@
+{%extends "index.html" %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- PROJECT -->
+<style>
+p{
+  border-radius: 20px;
+}
+#resumo{
+	font-size:200px;	
+}
+    
+    #myChart5 {
+    	height:100%;
+    	width:100%;
+    	min-height:150px;
+    }
+    .zc-ref {
+    	display:none;
+    }
+.searchable-container{margin:20px 0 0 0}
+.searchable-container label.btn-default.active{background-color:#007ba7;color:#FFF}
+.searchable-container label.btn-default{width:90%;border:1px solid #efefef;margin:5px; box-shadow:5px 8px 8px 0 #ccc;}
+.searchable-container label .bizcontent{width:100%;}
+.searchable-container .btn-group{width:90%}
+.searchable-container .btn span.glyphicon{
+    opacity: 0;
+}
+.searchable-container .btn.active span.glyphicon {
+    opacity: 1;
+}
+
+.btn span.glyphicon {         
+  opacity: 0;       
+}
+.btn.active span.glyphicon {        
+  opacity: 1;       
+}
+
+</style>
+
+{% block content %}
+
+<div id="resumo">
+  <div class="col-md-12">
+    <div class="col-md-2">
+      <h2><strong>Project: </strong> {{ project.title }}</h2></br>  
+      <div align="left">
+        <a href="/list-projects" class="btn btn-warning">Back</a>
+        <a href="#" class="btn btn-info" disabled>exportPDF</a>
+      </div>  
+    </div>
+    
+    <div class="col-md-10">
+      <div align="right">
+        <div id="chartcloud" width="100" ></div>  
+      </div>      
+    </div>
+  </div>  
+</div>
+<div class="container" style="padding-top: 320px;">
+  <div class="row">
+           <div class="col-xs-6 col-sm-3 col-md-2">
+                <a href="#" class="btn btn-primary" id="btn_text">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <i class="fa fa-headphones fa-2x"></i>
+                        </div>
+                        <div class="col-xs-12 text-center" id="div_text">
+                            <p>Text of Project </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-2">
+                <a href="#" class="btn btn-success" id="btn_counter">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <i class="fa fa-user fa-2x"></i>
+                        </div>
+                        <div class="col-xs-12 text-center" id="div_count">
+                            <p> Counter Type </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-2">
+                <a href="#" class="btn btn-danger" id="btn_tokenization">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <i class="fa fa-cube fa-2x"></i>
+                        </div>
+                        <div class="col-xs-12 text-center" id="div_tok">
+                            <p>Tokenization</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-xs-6 col-sm-3 col-md-2">
+                <a href="#" class="btn btn-info" id="btn_sent">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <i class="fa fa-bar-chart fa-2x"></i>
+                        </div>
+                        <div class="col-xs-12 text-center" id="div_sent">
+                            <p>Análise de Sentimento</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+</div>
+        
+    
+<br><br><br>
+    <div class="row">
+        <div class="col-md-12">
+            
+           <div class="col-md-6">
+               <div id="sent_pol" class="collapse" align="center">
+                  <h4 class="font-italic">Análise de Sentimento - Polaridade</h4>
+                    <table class="table">
+                      <thead style="background: #27B8BA; color: white;">
+                        <tr>
+                          <th>Sentence</th>
+                          <th>Polaridade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for key, value in result.items() %}
+                        <tr>
+                          <td>{{ key }}</td>
+                          <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+               </div>
+           </div>
+           
+           <div class="col-md-6">
+               <div id="sent_sub" class="collapse" align="center">
+                  <h4 class="font-italic">Análise de Sentimento - Subjetividade</h4>
+                    <table class="table">
+                      <thead style="background: #27B8BA; color: white; border-radius: 5px;">
+                        <tr>
+                          <th>Sentence</th>
+                          <th>Subjetividade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for key, value in result2.items() %}
+                        <tr>
+                          <td>{{ key }}</td>
+                          <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+               </div>
+           </div>
+           <!-- <div class="col-md-4">
+               <div id="speech" class="collapse" align="center">
+                  <h4 class="font-italic">Speech to Text</h4>
+                  <p style="background: #2178B5; color: white;">Not Emplemented</p>
+               </div>
+           </div> -->
+        </div>
+    </div>
+    <br>
+    <div class="row">
+       <div class="col-md-12">
+            <div class="col-md-4">
+              <div id="text" class="collapse" align="center">
+                  <h4 class="font-italic">Text of Project </h4>
+                  <p style="background: #21B394; color: white; border-radius: 5px;">{{ project.text}}</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+               <div id="counter" class="collapse" align="center">
+                  <h4 class="font-italic">Counter</h4> 
+                    {% for key,value in project.counter.items() %}
+                    <p style="background: #2178B5; color: white; border-radius: 5px; ">Key: {{ key }}, Value: {{ value }}</p>
+                                 {% endfor %} 
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div id="tokenization" class="collapse" align="center">
+                  <h4 class="font-italic">Tokenization</h4>
+                          
+                  <p style="background: #EB4658; color: white; border-radius: 5px;">{{ project.tokenization|join(' | ') }}</p>
+                          
+               </div>
+            </div>
+       </div> 
+    </div>
+<br>
+    
+</div>
+
+
+
+		<script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+		<script> zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+		ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];</script>
+
+<script type="text/javascript">
+  var texto = "{{ project.texto }}";
+
+  /*var textword = "";
+  console.log(textword);*/
+
+  str1 = texto.replace(/&#34;/g, "′"),
+  str2 = str1.replace(/&#39;/g, "′"),
+
+  tx = str2.replace(/′/g, " "),
+  
+    $("#modal-content-export").hide();
+  
+  
+	 
+// ################################## INICIO ZING CHART WORD CLOUD ####################################
+
+var myConfig = {
+  type: 'wordcloud',
+  options: {
+    text: tx,
+    minLength: 5,
+    colorType: 'palette',
+    ignore: ['&#39','&#38']
+  }
+};    
+ 
+zingchart.render({ 
+  id: 'chartcloud', 
+  data: myConfig, 
+  height: 300,  //altura
+  width: '100%', //largura
+});
+
+ //########################  FIM ZING CHART  ##############################################
+
+    $(function() {
+    $('#search').on('keyup', function() {
+        var pattern = $(this).val();
+        $('.searchable-container .items').hide();
+        $('.searchable-container .items').filter(function() {
+            return $(this).text().match(new RegExp(pattern, 'i'));
+        }).show();
+    });
+});
+    $( "#div_text").hide();
+    $( "#div_text").show(500);
+
+    $( "#div_count").hide();
+    $( "#div_count").show(750);    
+
+    $( "#div_tok").hide();
+    $( "#div_tok").show(1000);
+
+    $( "#div_sent").hide();
+    $( "#div_sent").show(1250);
+
+    $( "#text" ).show( 500 );
+    $( "#counter" ).show( 750 );
+    $( "#tokenization" ).show( 1000 );
+    $( "#generate" ).show( 1250 );
+    $( "#sent_sub" ).show( 1500 );
+    $( "#sent_pol" ).show( 1500 );
+    $( "#speech" ).show( 1750 );
+
+
+    $('#btn_text').click(function(){
+       $( "#text" ).slideToggle();  
+    });
+
+    $('#btn_counter').click(function(){
+       $( '#counter' ).slideToggle();
+    });
+
+    $('#btn_tokenization').click(function(){
+       $( '#tokenization' ).slideToggle();
+    });
+
+    $('#btn_generate').click(function(){
+       $( '#generate' ).slideToggle();
+    });
+
+    $('#btn_sent').click(function(){
+       $( '#sent_sub' ).slideToggle();
+       $( '#sent_pol' ).slideToggle();
+    });
+
+    $('#btn_speech').click(function(){
+       $( '#speech' ).slideToggle();
+    });
+
+    
+
+</script>
+{% endblock %}

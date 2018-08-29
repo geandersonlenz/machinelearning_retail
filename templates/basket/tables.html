@@ -1,0 +1,78 @@
+{%extends "index.html" %}
+{% block content %}
+
+<style type="text/css">
+	.container-table{
+		width: '100%';
+		padding-top: 60px;
+		
+	}
+	.table-striped {
+		color: black;
+		background-color: #96beff;
+	}
+</style>
+<body>
+	<br>
+	<div class="container3">
+	<div class="col-md-2" align="left">
+  		<button ><i class="fa fa-file fa-5x" data-toggle="modal" data-target="#exampleModalCenter"></i></button>
+  	</div>
+  	<div class="col-md-10">
+  		<h1 align="center">Market Basket Analysis</h1>			
+  	</div>	
+	</div>
+	
+	<br>
+  	
+  	<div class="container-table">
+	  	
+	  	<table class="table table-striped">
+	  	        <thead>
+	  	            <tr>
+	  	                <th>Antecedants (A)</th>
+	  	                <th>Consequents (B)</th>
+	  	                <th>Confiança (<i title="A confiança é uma probabilidade condicional de o cliente comprar o produto A também comprar o produto B." class="fa fa-info" aria-hidden="false"></i>)</th>
+	  	                <th>Suporte (<i title="O suporte de um produto ou conjunto de produtos é a fração de transações em nosso conjunto de dados que contém esse produto ou conjunto de produtos." class="fa fa-info" aria-hidden="false"></i>)</th>
+	  	                <th>Lift (<i title="Se alguém comprar o Produto A, quanto % aumentaria a chance de comprar o produto B " class="fa fa-info" aria-hidden="false"></i>)</th>
+	  	            </tr>
+	  	        </thead>
+	  	        <tbody>
+	  	        	{% for a,b,c,d,e in ziprules|sort(attribute=3, reverse=True) %}
+	  	            <tr>
+	  	            	<td>{{ a }}</td>						
+	  	            	<td>{{ b }}</td>				
+	  	            	<td>{{ '%0.2f' | format(d|float*100) }} %</td>
+	  	            	<td>{{ '%0.5f'| format(c|float) }}</td>
+	  	            	<td>{{ '%0.2f' | format(e|float) }}%</td>
+	  	            </tr>
+	  	        	{% endfor %}
+	  	        </tbody>
+	  	    </table>
+  	</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Atualização do Market Basket Analysis</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form action="{{ url_for('basketupdate') }}" method="POST" enctype="multipart/form-data">
+        	<input type="file" name="file">
+        	<br>
+        	<button type="submit" class="btn btn-primary">Processar</button>	
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

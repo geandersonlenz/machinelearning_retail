@@ -1,0 +1,242 @@
+{%extends "index.html" %}
+{% block content %}
+
+<style type="text/css">
+    
+    #page-wrapper{
+        background-color: #e0e1e2;
+    }
+    .box {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    padding: 10px 25px;
+    /*text-align: right;*/
+    display: block;
+    background-color: #fff;
+    height: 195px;
+
+    }
+    #meio{
+      height: 250px;
+    }
+    #inferior{
+      height: 250px;
+    }
+    #inferior h1{
+      font-size: 20px;
+    }
+    #inferior h5 {
+      font-size: 18px;
+    }
+    #iframe{
+      height: 400px;
+    }
+    .box-icon {
+        background-color: #57a544;
+        border-radius: 50%;
+        display: table;
+        height: 100px;
+        margin: 0 auto;
+        width: 100px;
+        margin-top: -61px;
+    }
+    .box-icon span {
+        color: #fff;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .info h4 {
+        font-size: 20px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    .info > p {
+        color: #717171;
+        font-size: 16px;
+        /*padding-top: 10px;*/
+        /*text-align: justify;*/
+    }
+    .info > a {
+        background-color: #03a9f4;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        color: #fff;
+        transition: all 0.5s ease 0s;
+    }
+    .info > a:hover {
+        background-color: #0288d1;
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.12);
+        color: #fff;
+        transition: all 0.5s ease 0s;
+    }
+    .box .info p { 
+        margin-top: 7px;
+        font-size: 13px;
+    }
+</style>
+
+<div class="container4">
+    <br />
+    <!-- #######################################  PRIMEIRA LINHA ###################################  -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                <div class="col-md-6">
+                    <div class="info">
+                        
+                        <p><strong>Cliente:</strong> {{ client.name }} {{ client.last_name }}</p>
+                        <p><strong>Celular: </strong>{{ client.cel }}</p>
+                        <p><strong>Address: </strong>{{ client.address }}</p>
+                        <p><strong>City: </strong>{{ client.city }}</p>
+                        <p><strong>State: </strong>{{ client.state }}</p>
+                    </div>    
+                </div>
+                <div class="col-md-6">
+                    <div class="info">
+
+                        <p><strong>Company Name: </strong> {{ client.companyname }} </p>
+                        <p><strong>Fone: </strong> {{ client.fone }} </p>
+                        <p><strong>Web: </strong> <a href="{{ client.web }}" target="_blank">{{ client.web }}</a></p>
+                        <p><strong>ZIP: </strong> {{ client.zip }} </p>
+                        <p><strong>Email:</strong> <a href="mailto:{{ client.email }}">{{ client.email }}</a></p>          
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box">
+                <div class="col-md-4">
+                  <div id="gauge1"></div>  
+                </div>
+                
+                <div class="col-md-4">
+                  <div id="gauge2"></div>  
+                </div>
+
+                <div class="col-md-4">
+                  <div id="gauge3"></div>  
+                </div>
+
+            </div>
+        </div>
+      </div>
+
+      <br />
+      <!-- ########################################  SEGUNDA LINHA ###################################  -->
+      <div class="row">
+          <div class="col-md-3">
+            <div class="box" id="meio">
+                <div id="horizontal_category"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="box" id="meio">
+                <div class="col-md-6">
+                  <div id="radar1"></div>
+                </div>
+                <div class="col-md-6">
+                  <div id="radar2"></div>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="box" id="meio">
+                <div id="">Grafo - Affinity Propagation</div>
+            </div>
+          </div>
+      </div>
+      <br />
+      <!-- ########################################  TERCEIRA LINHA ###################################  -->
+      <div class="row">
+          <div class="col-md-2">
+            <div class="box" id="inferior">
+                <br>
+                <div>
+                  <h5>Lifetime Value</h5>
+                </div>
+                <div class="ibox-content">
+                  <h1 class="no-margins">R$ 80.600,00</h1>
+                  <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down fa-5x "></i></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="box"id="inferior">
+                <br>
+                <div>
+                  <h5>Churn</h5>
+                </div>
+                <div class="ibox-content">
+                  <h1 class="no-margins">R$ 106.120,00</h1>
+                
+                  <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up fa-5x "></i></div>
+
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="box" id="inferior">
+                <br>
+                <div>
+                  <h5>Proxima Compra</h5>
+                </div>
+                <div class="ibox-content">
+                  <h1 class="no-margins">R$ 275.800,00</h1>
+                  <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up fa-5x "></i></div>
+                  
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="box" id="inferior">
+                <div class="ibox float-e-margins">
+                  <div>
+                    <h5 id="text">Previsão de Vendas</h5>
+                  </div>
+                  <div class="flot-chart">
+                    <div class="flot-chart-content" id="flot-dashboard-chart"></div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <br />
+      <!-- ########################################  QUARTA LINHA ###################################  -->
+      <div class="row">
+          <div class="col-md-12">
+            <div class="box" id="iframe">
+              <iframe class="ibox" src="{{ url_for('.static', filename='maps/map_receita3.html')}}" width="100%" height="380" frameborder="0"></iframe>
+            </div>
+            
+          </div>
+      </div>
+      <!-- ########################################  QUINTA LINHA ###################################  -->
+      <br />
+      
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('.static', filename='js/clients/horizontal_category.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/clients/radar1.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/clients/radar2.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/clients/gauge1.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/clients/gauge2.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/clients/gauge3.js')}}"></script>
+
+
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.spline.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.resize.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.pie.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.symbol.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/flot/jquery.flot.time.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/plugins/easypiechart/jquery.easypiechart.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('.static', filename='js/clients/previsao_vendas.js')}}"></script>
+
+{% endblock %}

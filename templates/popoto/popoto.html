@@ -1,0 +1,426 @@
+{%extends "index.html" %}
+{% block content %}
+  <script src="http://unpkg.com/popoto/dist/popoto.js"></script>
+  <script src="http://unpkg.com/jquery" charset="utf-8"></script>
+  <script src="http://unpkg.com/d3" charset="utf-8"></script>
+  <script src="http://unpkg.com/popoto/dist/popoto.js"></script>
+
+    <style>
+        .drawer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            width: 136px;
+            bottom: 0;
+            color: #bcc0c9;
+            background-color: #30333a;
+            text-shadow: rgba(0, 0, 0, .4) 0 1px 0;
+            overflow-y: auto;
+            height: 100%;
+            padding: 0 0 0 0;
+        }
+        .drawer h5 {
+            padding: 0 0 0 10px;
+            line-height: 39px;
+            font-size: 13px;
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 12px;
+            margin-top: 0;
+            border-bottom: 1px solid #424650;
+        }
+        .main {
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            bottom: 0;
+            left: 136px;
+            right: 0;
+            z-index: 10;
+            background-color: #d2d5da;
+        }
+        .frame {
+            height: 550px;
+            background-color: #F8F9FB;
+            position: relative;
+            top: 0;
+            opacity: 1;
+            max-height: 10000px;
+            border-bottom: 1px solid #e6e9ef;
+            overflow: hidden;
+        }
+        .frame:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+        }
+        .ppt-taxo-tag {
+            display: none;
+        }
+        .ppt-taxo-ul {
+            list-style-type: none;
+            display: block;
+            vertical-align: top;
+            padding-left: 10px;
+            margin: 0;
+        }
+        .ppt-taxo__span-icon:before {
+            content:none;
+        }
+        .ppt-larrow {
+            stroke: #9AA1AC;
+            stroke-width: 2px;
+            fill: #A5ABB6;
+        }
+        .ppt-rarrow {
+            stroke: #9AA1AC;
+            stroke-width: 2px;
+            fill: #A5ABB6;
+        }
+        .ppt-larrow.enabled {
+            fill: #68BDF6;
+            stroke: #5CA8DB;
+        }
+        .ppt-rarrow.enabled {
+            fill: #68BDF6;
+            stroke: #5CA8DB;
+        }
+        .ppt-count-box.value {
+            fill: #FB95AF;
+            stroke: #E0849B;
+            stroke-width: 2px;
+        }
+        .ppt-count-box.root {
+            fill: #68BDF6;
+            stroke: #5CA8DB;
+            stroke-width: 2px;
+        }
+        .code-bar {
+            background: #fff;
+            color: #848790;
+            line-height: 39px;
+            padding-left: 10px;
+            position: relative;
+            border-bottom: 1px solid #e6e9ef;
+        }
+        .ppt-span, .ppt-span-link {
+            color: #848790;
+        }
+        .notice-bar {
+            color: #fff;
+            background-color: #0e78b4;
+            height: 39px;
+            line-height: 39px;
+            padding-left: 10px;
+            position: relative;
+            border-bottom: 1px solid #e6e9ef;
+        }
+        .prompt {
+            margin-right: 5px;
+            opacity: .5;
+            -ms-filter: "alpha(Opacity=50)";
+            filter: alpha(opacity=50);
+            font-weight: 700;
+        }
+        .ppt-node-background-circle {
+            fill: #fdcc59;
+        }
+        .table-holder {
+            max-height: 464px;
+            min-height: 151px;
+            overflow: auto;
+            background: #fff;
+        }
+        .ppt-result {
+            background-color: #fff;
+            border-bottom: 1px solid #ebecec;
+            vertical-align: top;
+            line-height: 26px;
+            padding: 0 16px;
+        }
+        .ppt-result:hover {
+            background-color: #fff;
+        }
+        .ppt-count {
+            cursor: pointer;
+            color: white;
+        }
+        .ppt-label{
+        	color: white;
+        }
+        .ppt-label:hover {
+            color: gray;
+        }
+        .ppt-node-background-circle.disabled {
+            fill: #c4c4c4;
+        }
+        .ppt-link-relation.disabled {
+            stroke: #D3D3D3;
+            stroke-width: 1px;
+            stroke-dasharray: 500;
+        }
+        .ppt-link-text-relation.disabled {
+            fill: #d3d3d3;
+            font-size: 10px;
+        }
+        .ppt-count-box.value.disabled {
+            fill: #D3D3D3;
+            stroke: #c7c7c7;
+            stroke-width: 2px;
+            opacity: 0.8;
+        }
+        .ppt-node-ellipse.choose.disabled {
+            fill: #D3D3D3;
+            stroke: #c7c7c7;
+        }
+        /* ####################       LUCAS BOREAL ############# */
+        .ppt-svg-graph{
+        	background-color: #444951 ;
+        }
+        /* ####################       LUCAS BOREAL ############# */
+        #popoto-graph:fullscreen {
+            width: 100%;
+            height: 100%;
+        }
+        #popoto-graph:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+        }
+        #popoto-graph:-moz-full-screen {
+            width: 100%;
+            height: 100%;
+        }
+        #popoto-graph:-ms-fullscreen {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+<!-- <body class="ppt-body"> -->
+
+<section class="ppt-section-main">
+
+    <div class="ppt-container-graph">
+        <nav id="popoto-taxonomy" class="ppt-taxo-nav">
+            <!-- Label/taxonomy filter will be generated here -->
+        </nav>
+        <div id="popoto-graph" class="ppt-div-graph">
+            <!-- Graph will be generated here-->
+        </div>
+    </div>
+
+    <!--<div id="popoto-query" class="ppt-container-query">
+        <!-- Query viewer will be generated here -->
+    <!-- </div> -->
+
+    <!--<div id="popoto-cypher" class="ppt-container-cypher">
+        Cypher query viewer will be generated here
+    </div>
+
+    <div class="ppt-section-header">
+        The total results count is updated with a listener defined below
+        RESULTS <span id="result-total-count" class="ppt-count"></span>
+    </div>
+
+    <div id="popoto-results" class="ppt-container-results">
+        <!-- Results will be generated here-->
+    <!-- </div> -->
+
+</section>
+
+<!-- Required scripts -->
+
+<script src="https://unpkg.com/jquery" charset="utf-8"></script>
+<script src="https://unpkg.com/d3" charset="utf-8"></script>
+<script src="https://unpkg.com/popoto/dist/popoto.js"></script>
+<script>
+    /**
+     * URL used to access Neo4j REST API to execute queries.
+     * Update this parameter to your running server instance.
+     *
+     * For more information on Neo4J REST API the documentation is available here: http://neo4j.com/docs/stable/rest-api-cypher.html
+     */
+    //ORIGINAL: popoto.rest.CYPHER_URL = "http://localhost:7474/db/data/transaction/commit";
+    popoto.rest.CYPHER_URL = "https://db-kh9ct9ai1mqn6hz2itry.graphenedb.com:24780/db/data/transaction/commit";
+
+    /**
+     * Add this authorization property if your Neo4j server uses basic HTTP authentication.
+     * The value of this property must be "Basic <payload>", where "payload" is a base64 encoded string of "username:password".
+     *
+     * "btoa" is a JavaScript function that can be used to encode the user and password value in base64 but it is recommended to directly use the Base64 value.
+     *
+     *  For example Base64 encoded value of "neo4j:password" is "bmVvNGo6cGFzc3dvcmQ="
+     *  Note that it is not a safe way to keep credentials as anyone can have access to this code in your web page.
+     */
+    //popoto.rest.AUTHORIZATION = "Basic " + btoa("neo4j:password");
+    popoto.rest.AUTHORIZATION = "Basic cG9wb3RvOmIuVlJZQVF2blZjV2tyLlRaYnpmTks5aHp6SHlTdXk==";
+
+    /**
+     * Define the Label provider you need for your application.
+     * This configuration is mandatory and should contain at least all the labels you could find in your graph model.
+     *
+     * In this version only nodes with a label are supported.
+     *
+     * By default If no attributes are specified Neo4j internal ID will be used.
+     * These label provider configuration can be used to customize the node display in the graph.
+     * See www.popotojs.com or example for more details on available configuration options.
+     */
+    popoto.provider.node.Provider = {
+
+          "Customer": {
+
+              returnAttributes: ["companyName", "customerID", "city", "country", "postalCode", "contactName", "fax", "region", "address", "contactTitle", "phone"],
+
+              constraintAttribute: "customerID",
+
+              autoExpandRelations: true,
+
+              "getDisplayType": function (node) {
+
+                  return popoto.provider.node.DisplayTypes.IMAGE;
+
+              }
+
+          },
+
+          "Product": {
+
+              returnAttributes: ["productName", "categoryID", "discontinued", "unitsOnOrder", "quantityPerUnit", "reorderLevel", "supplierID", "unitsInStock", "productID", "unitPrice"],
+
+              constraintAttribute: "productID",
+
+              autoExpandRelations: true,
+
+              "getDisplayType": function (node) {
+
+                  return popoto.provider.node.DisplayTypes.IMAGE;
+
+              },
+
+              "getSize": function (node) {
+
+                  if (node.type === popoto.graph.node.NodeTypes.VALUE) {
+
+                      if (node.parent.parentRel === "ORDERS") {
+
+                          if (node.attributes.hasOwnProperty("incomingRels")) {
+
+                              return sizeScale(relationsAmount(node.attributes.incomingRels));
+
+                          }
+
+                      }
+
+                  }
+
+
+
+                  if (node.value !== undefined && node.value.length > 0) {
+
+                      if (node.parentRel === "ORDERS") {
+
+                          if (node.value[0].attributes.hasOwnProperty("incomingRels")) {
+
+                              return sizeScale(relationsAmount(node.value[0].attributes.incomingRels));
+
+                          }
+
+                      }
+
+                  }
+
+
+
+                  return 50;
+
+              }
+
+          },
+
+          "Order": {
+
+              returnAttributes: ["shipName", "customerID", "orderID", "orderDate", "shipAddress", "shipRegion", "freight", "shipCity", "shipCountry", "employeeID", "shippedDate", "requiredDate", "shipPostalCode", "shipVia"],
+
+              constraintAttribute: "orderID",
+
+              autoExpandRelations: true,
+
+              "getDisplayType": function (node) {
+
+                  return popoto.provider.node.DisplayTypes.IMAGE;
+
+              }
+
+          },
+
+          "Supplier": {
+
+              returnAttributes: ["companyName", "city", "homePage", "country", "postalCode", "contactName", "supplierID", "fax", "region", "address", "contactTitle", "phone"],
+
+              constraintAttribute: "supplierID",
+
+              "getDisplayType": function (node) {
+
+                  return popoto.provider.node.DisplayTypes.IMAGE;
+
+              }
+
+          },
+
+          "Category": {
+
+              returnAttributes: ["categoryName", "categoryID", "description"],
+
+              constraintAttribute: "categoryID",
+
+              autoExpandRelations: true,
+
+              "getDisplayType": function (node) {
+
+                  return popoto.provider.node.DisplayTypes.IMAGE;
+
+              }
+
+
+
+          }
+
+      };
+
+    /**
+     * Here a listener is used to retrieve the total results count and update the page accordingly.
+     * This listener will be called on every graph modification.
+     */
+    
+     /**
+    popoto.result.onTotalResultCount(function (count) {
+        document.getElementById("result-total-count").innerHTML = "(" + count + ")";
+    });
+	*/
+
+
+    /**
+     * The number of results returned can be changed with the following parameter.
+     * Default value is 100.
+     *
+     * Note that in this current version no pagination mechanism is available in displayed results
+     */
+    //popoto.query.RESULTS_PAGE_SIZE = 100;
+
+
+    /**
+     * For this version, popoto.js has been generated with debug traces you can activate with the following properties:
+     * The value can be one in DEBUG, INFO, WARN, ERROR, NONE.
+     *
+     * With INFO level all the executed cypher query can be seen in the navigator console.
+     * Default is NONE
+     */
+    // popoto.logger.LEVEL = popoto.logger.LogLevels.INFO;
+
+    /**
+     * Start popoto.js generation.
+     * The function requires the label to use as root element in the graph.
+     */
+    popoto.start("Person");
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{%extends "index.html" %}
+{% block content %}
+<style type="text/css">
+	.container3{
+		margin-left: 30px;
+		margin-right: 30px;
+	}
+	#two{
+		margin-top: 200px;
+	}
+	.title{
+		text-align: center;
+	}
+	h1{
+		font-size: 40px;
+
+	}
+	h2{
+		font-weight: bold;
+		border-bottom: 1px solid black;
+	}
+	#esquerda{
+		border-right: 1px solid black;
+	}
+	p{
+		font-size: 20px;
+	}
+</style>
+<div class="container3">
+	<br>
+	<a href="{{ url_for('categorias') }}" class="btn btn-info">Back</a>
+	<h1 align="center">Resultado Multiclass</h1>
+	
+	<div class="row">
+		<div class="col-md-6" align="right" id="esquerda">
+			<h2>Produtos</h2>
+			
+				{% for hat in y_hat %}
+				<p>{{ hat[0] }}</p>
+				<p>{{ hat[1] }}</p>
+				<p>{{ hat[2] }}</p>
+				<p>{{ hat[3] }}</p>
+				{% endfor %}
+		</div>
+		<div class="col-md-6" align="left" id="direita">
+			<h2>Categorias</h2>
+			
+				{% for hat in cat_hat %}
+				<p>{{ hat[0] }}</p>
+				<p>{{ hat[1] }}</p>
+				<p>{{ hat[2] }}</p>
+				<p>{{ hat[3] }}</p>
+				{% endfor %}
+		</div>
+	</div>
+	
+</div>
+
+
+{% endblock %}

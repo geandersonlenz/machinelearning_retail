@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jsPDF</title>
+	<meta charset="utf-8">
+	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+	<script type="text/javascript">
+		function genPDF() {
+			var doc = new jsPDF();
+			doc.text(20, 20, '{{ text }}');
+			doc.save('firs.pdf')
+		}
+	</script>
+</head>
+<body>
+	<div id="testcase">
+	<h1>jsPDF Demos</h1>
+	<a href="javascript:genPDF()">Download PDF</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!-- /project/<id>/wordcloud -->
+
+{%extends "index.html" %}
+{% block content %}
+<br>
+
+<a href="{{ url_for('list_projects')}}" class="projects btn btn-info btn-sm"><i class="fa-2x fa fa-backward"></i> back </a>
+<a href="{{ url_for('wordcloud', id=project._id)}}" class="projects btn btn-default btn-sm active"><i class="fa-2x fa fa-cloud"></i> Word Cloud </a>
+<a href="{{ url_for('texto', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-font"></i> Texto </a>
+<a href="{{ url_for('analisedesentimento', id = project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Análise de Sentimento</a>
+<!-- <a href="{{ url_for('topicmodelling', id= project._id)}}" class="projects btn btn-default btn-sm" ><i class="fa-2x fa fa-eye"></i> Topic Modelling</a>
+<a href="{{ url_for('geracaodetexto', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-eraser"></i> Geração de Texto</a>
+<a href="{{ url_for('speechtotext', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Speech to Text</a>
+<a href="{{ url_for('entities', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Entities</a> -->
+
+<div id="wordcloud" width="100" ></div>  
+
+
+<script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+<script> zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+	ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];</script>
+
+<script type="text/javascript">
+
+var texto = "{{ project.texto }}";
+
+/*var textword = "";
+console.log(textword);*/
+
+str1 = texto.replace(/&#34;/g, "′"),
+str2 = str1.replace(/&#39;/g, "′"),
+console.log(str2);
+
+tx = str2.replace(/′/g, " "),
+console.log(tx);
+
+var myConfig = {
+  	type: 'wordcloud',
+  	options: {
+    text: tx,
+    minLength: 5,
+    colorType: 'palette',
+    ignore: ['&#39','&#38']
+  }
+};    
+ 
+zingchart.render({ 
+  	id: 'wordcloud', 
+  	data: myConfig, 
+  	height: 700,  //altura
+  	width: '100%', //largura
+});
+</script>
+{% endblock %}

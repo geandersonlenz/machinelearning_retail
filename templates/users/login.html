@@ -1,0 +1,36 @@
+{% extends "/users/layout.html" %}
+{% block body %}
+<style type="text/css">
+  img {
+    width: '100%';
+    height: 600px;
+  }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>Login do Usuário</h2>
+            <form method=POST action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" name="username" placeholder="Username" required="">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" name="pass" placeholder="Password" required="">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            </form>
+                <p style="color: red;" align="center">{{error}}</p>
+        </div>
+        
+    </div>
+    <div class="row">
+      <div class="col-md-12" align="center">
+        <img src="{{ url_for('.static', filename='basic/boreal-logo.jpeg') }}">  
+      </div>
+      
+    </div>
+</div>
+{% endblock %}

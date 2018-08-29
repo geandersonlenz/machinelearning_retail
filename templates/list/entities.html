@@ -1,0 +1,69 @@
+{%extends "index.html" %}
+{% block content %}
+<style type="text/css">
+  .container-table{
+    width: '100%'
+  }
+  .table-striped {
+    color: black;
+    background-color: #efefef;
+  }
+</style>
+<br>
+<a href="{{ url_for('list_projects')}}" class="projects btn btn-info btn-sm"><i class="fa-2x fa fa-backward"></i> back </a>
+<a href="{{ url_for('wordcloud', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-cloud"></i> Word Cloud </a>
+<a href="{{ url_for('texto', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-font"></i> Texto </a>
+<a href="{{ url_for('analisedesentimento', id = project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Análise de Sentimento</a>
+<!-- <a href="{{ url_for('topicmodelling', id= project._id)}}" class="projects btn btn-default btn-sm" ><i class="fa-2x fa fa-eye"></i> Topic Modelling</a>
+<a href="{{ url_for('geracaodetexto', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-eraser"></i> Geração de Texto</a> -->
+<!-- <a href="{{ url_for('speechtotext', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Speech to Text</a> -->
+<a href="{{ url_for('entities', id=project._id)}}" class="projects btn btn-default btn-sm active"><i class="fa-2x fa fa-bars"></i> Entities</a>
+<a href="{{ url_for('stopwords', id=project._id)}}" class="projects btn btn-default btn-sm"><i class="fa-2x fa fa-bars"></i> Stopwords</a>
+
+<h1>{{ title }} <small>{{ project.title }}</small></h1>
+
+ <div class="row">
+
+    <div class="col-md-12">
+        <p>Dictionary</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+               
+        </thead>
+            <tbody>
+                {% for key, value in dictionary.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>    
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-md-3">
+        <p>person</p>
+        <p>{{ person }}</p>
+    </div>
+    <div class="col-md-3">
+        <p>organization</p>
+        <p>{{ organization }}</p>
+    </div>
+    <div class="col-md-3">
+        <p>location</p>
+        {{ location }}
+    </div>
+    <div class="col-md-3">
+        <p>miscellaneous</p>
+        {{ miscellaneous }}
+    </div>
+    
+  
+ </div>
+
+{% endblock %}
