@@ -20,7 +20,7 @@ Flask-PyMongo==0.5.1
 gensim==3.4.0
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 jmespath==0.9.3
 joblib==0.11
 json-tricks==3.12.1
