@@ -44,7 +44,7 @@ plac==0.9.6
 pluggy==0.6.0
 preshed==1.0.0
 PuLP==1.6.8
-py==1.5.3
+py==1.10.0
 pycparser==2.18
 pymongo==3.6.1
 pyparsing==2.2.0
